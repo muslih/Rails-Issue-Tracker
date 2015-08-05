@@ -9,6 +9,10 @@ RSpec.describe Ticket, type: :model do
     should belong_to(:user)
   end
 
+  it "should have many issues" do
+    should have_many(:issues)
+  end
+
   it "is invalid without title" do
     expect(FactoryGirl.build(:ticket, title: nil)).not_to be_valid
   end

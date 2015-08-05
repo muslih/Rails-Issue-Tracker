@@ -5,6 +5,10 @@ RSpec.describe User, type: :model do
     expect(FactoryGirl.create(:user)).to be_valid
   end
 
+  it "should have many tickets" do
+    should have_many(:tickets)
+  end
+
   it "is invalid without a first name" do
     expect(FactoryGirl.build(:user, first_name: nil)).not_to be_valid
   end

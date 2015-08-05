@@ -7,6 +7,6 @@ class User < ActiveRecord::Base
 
   validates :first_name,    presence: true
   validates :last_name,     presence: true
-  validates :user_type,     presence: true,
+  validates :role,          presence: true,
                             inclusion: { in: %w{customer technician admin} }
 end

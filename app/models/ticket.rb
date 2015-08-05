@@ -1,6 +1,7 @@
 class Ticket < ActiveRecord::Base
   belongs_to  :user
   has_many    :issues
+  accepts_nested_attributes_for :issues
   
   ISSUE_TYPES = %w{software equipment computer peripheral network}
   STATUSES = ['open', 'in progress', 'pending customer response',

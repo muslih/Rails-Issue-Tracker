@@ -1,0 +1,63 @@
+ <div class="col-md-10 col-md-offset-1">   
+    <%= form_for(@ticket) do |f| %>
+        <%= render 'shared/error_messages', object: f.object %>
+        <div class="row">
+            <div class="form-group col-md-12">
+                <%= f.label :title %>
+                <%= f.text_field :title, class: 'form-control' %>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-4">
+                <% list = { "Software" => 'software', "Equipment" => 'equipment', 
+                            "Computer" => 'computer', "Peripheral" => 'peripheral', 
+                            "Network" => 'network' } %>
+                <%= f.label :issue_type %>
+                <%= f.select :issue_type, list, {}, { class: "form-control" }%>
+            </div>
+
+            <div class="form-group col-md-4">
+                <% list = { "Open" => "open", "In Progress"  => "in progress", "Contact Customer" => "contact customer", 
+                            "Pending Customer Response" => "pending customer response", 
+                            "Customer Responded" => "customer responded", "Closed" => "closed"}%>
+                <%= f.label :status %>
+                <%= f.select :status, list, {}, { class: "form-control" }%>
+            </div>
+
+            <div class="form-group col-md-4">
+                <% list = { "Question" => 1, "Affects 1-10 People" => 2, "Affects 10-50 People" => 3,
+                            "Affects 50-100 People" => 4, "Mission Critical" => 5 }%>
+                <%= f.label :priority %>
+                <%= f.select :priority, list, {}, { class: "form-control" }%>
+            </div>
+        </div>
+
+        <%= f.fields_for :issues, @ticket.issues.build do |n| %>
+            <div class="form-group">
+                <%= n.label :description, "Update Issue" %>
+                <%= n.text_area :description, class: 'form-control' %>
+                <%= n.hidden_field :user_id, :value => current_user.id %>
+            </div>
+        <% end %>
+
+        <%= f.submit 'Submit Edit', class: "btn btn-primary form-control" %>
+    <% end %>
+    <br>
+    <% @ticket.issues.order('created_at DESC').each do |issue| %>
+        <% if issue.id != nil %>
+            <div class="well">
+                <div class="row">
+                    <div class="col-md-4">
+                        <h4>
+                            <%= issue.user.first_name %> <%= issue.user.last_name %>
+                            <small>
+                                <%= issue.created_at.in_time_zone('Eastern Time (US & Canada)').strftime("%D at %l:%M%p") %>
+                            </small>
+                        </h4>
+                    </div>
+                </div>
+                <%= issue.description %>
+            </div>
+        <% end %>
+    <% end %>
+</div>

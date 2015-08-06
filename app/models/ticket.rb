@@ -5,7 +5,7 @@ class Ticket < ActiveRecord::Base
   
   ISSUE_TYPES = %w{software equipment computer peripheral network}
   STATUSES = ['open', 'in progress', 'pending customer response',
-              'contact customer', 'closed']
+              'customer responded', 'contact customer', 'closed']
   validates :title,         presence: true
   validates :issue_type,    presence: true,
                             inclusion: { in: ISSUE_TYPES }

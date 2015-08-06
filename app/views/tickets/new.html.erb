@@ -1,21 +1,34 @@
-<%= form_for(@ticket) do |f| %>
-    <%= render 'shared/error_messages', object: f.object %>
-    <%= f.label :title %>
-    <%= f.text_field :title %>
+ <div class="col-md-6 col-md-offset-3">   
+    <%= form_for(@ticket) do |f| %>
+        <%= render 'shared/error_messages', object: f.object %>
+        <div class="form-group">
+            <%= f.label :title %>
+            <%= f.text_field :title, class: 'form-control' %>
+        </div>
 
-    <%= f.label :issue_type %>
-    <%= f.text_field :issue_type %>
+        <div class="form-group">
+            <%= f.label :issue_type %>
+            <%= f.text_field :issue_type, class: 'form-control' %>
+        </div>
 
-    <%= f.label :status %>
-    <%= f.text_field :status %>
+        <div class="form-group">
+            <%= f.label :status %>
+            <%= f.text_field :status, class: 'form-control' %>
+        </div>
 
-    <%= f.label :priority %>
-    <%= f.text_field :priority %>
+        <div class="form-group">
+            <%= f.label :priority %>
+            <%= f.text_field :priority, class: 'form-control' %>
+        </div>
 
-    <%= f.fields_for :issues do |issue| %>
-        <%= issue.label :description %>
-        <%= issue.text_field :description %>
+        <%= f.fields_for :issues do |n| %>
+            <div class="form-group">
+                <%= n.label :description %>
+                <%= n.text_field :description, class: 'form-control' %>
+                <%= n.hidden_field :user_id, :value => current_user.id %>
+            </div>
+        <% end %>
+
+        <%= f.submit 'Submit Ticket', class: "btn btn-primary form-control" %>
     <% end %>
-
-    <%= f.submit %>
-<% end %>
+</div>

@@ -1,7 +1,20 @@
 Rails.application.routes.draw do
+  
   devise_for :users
+  devise_scope :user do
+    authenticated :user do
+      root :to => 'passthrough#index', as: :authenticated_root
+    end
+    unauthenticated :user do
+      root :to => 'devise/sessions#new', as: :unauthenticated_root
+    end
+  end
   resources :tickets, except: [:destroy]
   resources :issues,  except: [:edit, :update, :destroy]
+
+  get '/dashboard/admin' => 'user_dashboards#admin'
+  get '/dashboard/tech' => 'user_dashboards#tech'
+  get '/dashboard/' => 'user_dashboards#customer'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

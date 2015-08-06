@@ -1,0 +1,21 @@
+<div class="col-md-8 col-md-offset-2">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3><%= @ticket.title %></h3>
+        </div>
+        <div class="panel-body">
+            <div class="well">
+                <h4><%= @ticket.user.first_name %> <%= @ticket.user.last_name %></h4>
+                <p><%= @ticket.status %></p>
+            </div>
+
+            <% @ticket.issues.order('created_at DESC').each do |issue| %>
+                <div class="well">
+                    <%= issue.description %>
+                    <%= issue.created_at %>
+                    <%= issue.user.first_name %> <%= issue.user.last_name %>
+                </div>
+            <% end %>
+        </div>
+    </div>
+</div>

@@ -28,7 +28,6 @@ class TicketsController < ApplicationController
 
   def edit
     @ticket = Ticket.find(params[:id])
-    @ticket.issues.build
   end
 
   def update
@@ -45,13 +44,14 @@ class TicketsController < ApplicationController
 
     def ticket_params
       params.require(:ticket).permit(:title, :issue_type, :status, :priority,
-                                    issues_attributes: [:description])
+                                    issues_attributes: [:description, :user_id])
     end
 
     def does_user_have_access?
       ticket = Ticket.find(params[:id])
       if !(ticket.user == current_user or ['admin', 'technician'].include? current_user.role)
-        redirect_to new_user_session_url
+        flash[:warning] = "You do not have access to that page."
+        redirect_to '/'
       end
     end
 end

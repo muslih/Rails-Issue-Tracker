@@ -7,6 +7,8 @@
             <div class="well">
                 <h4><%= @ticket.user.first_name %> <%= @ticket.user.last_name %></h4>
                 <p><%= @ticket.status %></p>
+                <p><%= @ticket.user.email %></p>
+                <p><%= @ticket.user.role %></p>
             </div>
 
             <% @ticket.issues.order('created_at DESC').each do |issue| %>

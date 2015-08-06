@@ -2,5 +2,19 @@
 @import "bootstrap-sprockets";
 
 body {
-    margin-top: 60px;
+    margin-top: 51px;
+}
+
+.container {
+    background-color: #d3d3d3;
+}
+
+.panel-default {
+    padding: 0;
+
+    .black-panel-heading {
+        background-color: #333333;
+        color: white;
+        border-color: #101010;
+    }
 }

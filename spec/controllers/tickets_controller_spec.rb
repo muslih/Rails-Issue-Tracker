@@ -1,4 +1,5 @@
 require 'rails_helper'
+require 'pp'
 
 RSpec.describe TicketsController, type: :controller do
   before :each do
@@ -68,7 +69,7 @@ RSpec.describe TicketsController, type: :controller do
         :issue_type => "software",
         :status => "open",
         :priority => 1,
-        :issues => { :description => "test description" } }
+        :issues_attributes => [{ :description => "Test description" }] }
     end
 
     it "creates a new ticket with valid params" do

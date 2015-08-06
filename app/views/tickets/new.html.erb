@@ -1,0 +1,21 @@
+<%= form_for(@ticket) do |f| %>
+    <%= render 'shared/error_messages', object: f.object %>
+    <%= f.label :title %>
+    <%= f.text_field :title %>
+
+    <%= f.label :issue_type %>
+    <%= f.text_field :issue_type %>
+
+    <%= f.label :status %>
+    <%= f.text_field :status %>
+
+    <%= f.label :priority %>
+    <%= f.text_field :priority %>
+
+    <%= f.fields_for :issues do |issue| %>
+        <%= issue.label :description %>
+        <%= issue.text_field :description %>
+    <% end %>
+
+    <%= f.submit %>
+<% end %>

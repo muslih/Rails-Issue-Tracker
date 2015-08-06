@@ -12,6 +12,7 @@ class TicketsController < ApplicationController
 
   def new
     @ticket = Ticket.new
+    @ticket.issues.build
   end
 
   def create
@@ -27,6 +28,7 @@ class TicketsController < ApplicationController
 
   def edit
     @ticket = Ticket.find(params[:id])
+    @ticket.issues.build
   end
 
   def update

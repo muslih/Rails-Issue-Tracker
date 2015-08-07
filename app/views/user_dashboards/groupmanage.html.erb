@@ -1,0 +1,16 @@
+<%= form_for(GroupMembership.new) do |f| %>
+    <%= render 'shared/error_messages', object: f.object %>
+    <div class="row">
+        <div class="form-group col-md-4">
+            <%= f.label :group_id %>
+            <%= f.select :group_id, @groupopts, {}, { class: "form-control" }%>
+        </div>
+
+        <div class="form-group col-md-4">
+            <%= f.label :user_id %>
+            <%= f.select :user_id, @useropts, { :selected => :user_ids,:include_blank => false }, { class: "form-control", multiple: true, size: 10 }%>
+        </div>
+    </div>
+
+    <%= f.submit 'Submit Edit', class: "btn btn-primary form-control" %>
+<% end %>

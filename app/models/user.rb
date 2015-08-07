@@ -1,6 +1,8 @@
 class User < ActiveRecord::Base
-  has_many :tickets
   has_many :issues
+  has_many :tickets
+  has_many :groups, through: :group_memberships
+  has_many :group_memberships
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
@@ -8,6 +10,11 @@ class User < ActiveRecord::Base
 
   validates :first_name,    presence: true
   validates :last_name,     presence: true
-  validates :role,          presence: true,
-                            inclusion: { in: %w{customer technician admin} }
+  validates :role, presence: true,
+                   inclusion: { in: %w(customer technician admin) }
+
+  def add_group(group)
+    group = Group.find_by(name: group)
+    group.users << self
+  end
 end

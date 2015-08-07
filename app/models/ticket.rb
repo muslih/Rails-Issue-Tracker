@@ -1,9 +1,9 @@
 class Ticket < ActiveRecord::Base
-  belongs_to  :user
-  has_many    :issues
+  belongs_to :user
+  has_many :issues
   accepts_nested_attributes_for :issues
-  
-  ISSUE_TYPES = %w{software equipment computer peripheral network}
+
+  ISSUE_TYPES = %w(software equipment desktop network helpdesk)
   STATUSES = ['open', 'in progress', 'pending customer response',
               'customer responded', 'contact customer', 'closed']
   validates :title,         presence: true
@@ -18,9 +18,8 @@ class Ticket < ActiveRecord::Base
 
   def self.search(search)
     if search
-      where("title LIKE ?", "%#{search}%")
-      # joins(:user).where('title LIKE ? OR users.first_name LIKE ? OR users.last_name LIKE ?', "%#{search}%", "%#{search}%", "%#{search}%")
-      joins(:user).where("title LIKE ? OR (printf('%s %s', users.first_name, users.last_name) LIKE ?)", 
+      joins(:user).where("title LIKE ? OR (printf('%s %s',
+                         users.first_name, users.last_name) LIKE ?)",
                          "%#{search}%", "%#{search}%")
     else
       find(:all)

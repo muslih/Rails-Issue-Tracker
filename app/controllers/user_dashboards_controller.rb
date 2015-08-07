@@ -11,6 +11,12 @@ class UserDashboardsController < ApplicationController
     @cc = Ticket.where('status == ?', 'contact customer') 
   end
 
+  def groupmanage
+    @groups = Group.all
+    @groupopts = Group.all.map{|g| [g.name.capitalize, g.id]}
+    @useropts = User.where('role == ?', 'technician').map{|u| [u.email, u.id]}
+  end
+
   def tech
   end
 

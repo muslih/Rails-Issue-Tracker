@@ -3,7 +3,8 @@ class UserDashboardsController < ApplicationController
   before_action :does_user_have_access?
 
   def admin
-    @tickets = Ticket.where('status != ?', 'closed').order('priority != 5, created_at ASC')
+    assignments = Ticket.joins(:assignments).where(assignments: { group_id: current_user.groups.map(&:id) })
+    @tickets = assignments.where('status != ?', 'closed').order('priority != 5, created_at ASC')
 
     @open = Ticket.where('status == ?', 'open')
     @progress = Ticket.where('status == ?', 'in progress')
@@ -14,7 +15,7 @@ class UserDashboardsController < ApplicationController
   def groupmanage
     @groups = Group.all
     @groupopts = Group.all.map{|g| [g.name.capitalize, g.id]}
-    @useropts = User.where('role == ?', 'technician').map{|u| [u.email, u.id]}
+    @useropts = User.where('role == ? || role == ?', 'technician', 'admin').map{|u| [u.email, u.id]}
   end
 
   def tech

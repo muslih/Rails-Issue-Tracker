@@ -2,6 +2,8 @@ class Ticket < ActiveRecord::Base
   belongs_to :user
   has_many :issues
   accepts_nested_attributes_for :issues
+  has_many :assignments
+  has_many :groups, through: :assignments
 
   ISSUE_TYPES = %w(software equipment desktop network helpdesk)
   STATUSES = ['open', 'in progress', 'pending customer response',
@@ -24,5 +26,10 @@ class Ticket < ActiveRecord::Base
     else
       find(:all)
     end
+  end
+
+  def add_group(group)
+    group = Group.find_by(name: group)
+    group.tickets << self
   end
 end

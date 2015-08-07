@@ -19,6 +19,7 @@ class TicketsController < ApplicationController
     @ticket = current_user.tickets.new(ticket_params)
 
     if @ticket.save
+      @ticket.add_group(@ticket.issue_type)
       flash[:success] = "Ticket has been created."
       redirect_to @ticket
     else
@@ -33,6 +34,7 @@ class TicketsController < ApplicationController
   def update
     @ticket = Ticket.find(params[:id])
     if @ticket.update_attributes(ticket_params)
+      @ticket.add_group(@ticket.issue_type)
       flash[:success] = "Ticket has been updated."
       redirect_to @ticket
     else

@@ -18,12 +18,14 @@ groups.each do |group|
 end
 
 admin.add_group('admin')
+admin.add_group('software')
 
 (1..10).each do
   c = FactoryGirl.create(:customer)
   c.save
     (1..5).each do
       tick = c.tickets.create(FactoryGirl.attributes_for(:ticket))
+      tick.add_group(tick.issue_type)
     end
 
     c.tickets.each do |ticket|
@@ -34,6 +36,7 @@ admin.add_group('admin')
   t.save
     (1..5).each do
       tick = t.tickets.create(FactoryGirl.attributes_for(:ticket))
+      tick.add_group(tick.issue_type)
     end
 
     t.tickets.each do |ticket|
@@ -44,6 +47,7 @@ admin.add_group('admin')
   a.save
     (1..5).each do
       tick = a.tickets.create(FactoryGirl.attributes_for(:ticket))
+      tick.add_group(tick.issue_type)
     end
 
     a.tickets.each do |ticket|

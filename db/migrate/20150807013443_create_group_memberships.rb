@@ -4,8 +4,6 @@ class CreateGroupMemberships < ActiveRecord::Migration
       t.integer :user_id
       t.integer :ticket_id
       t.integer :group_id
-      t.string  :role
-      t.string  :group_name
       
       t.timestamps null: false
     end

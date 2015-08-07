@@ -15,4 +15,15 @@ class Ticket < ActiveRecord::Base
                             numericality: { greater_than: 0,
                                             less_than: 6,
                                             only_integer: true }
+
+  def self.search(search)
+    if search
+      where("title LIKE ?", "%#{search}%")
+      # joins(:user).where('title LIKE ? OR users.first_name LIKE ? OR users.last_name LIKE ?', "%#{search}%", "%#{search}%", "%#{search}%")
+      joins(:user).where("title LIKE ? OR (printf('%s %s', users.first_name, users.last_name) LIKE ?)", 
+                         "%#{search}%", "%#{search}%")
+    else
+      find(:all)
+    end
+  end
 end

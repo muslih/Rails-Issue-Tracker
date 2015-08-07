@@ -1,0 +1,33 @@
+<table class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>Ticket</th>
+            <th>Status</th>
+            <th>Opened</th>
+            <th>Updated</th>
+            <th>Type</th>
+            <% if current_user.role != 'customer' %>
+                <th>Priority</th>
+            <% end %>
+        </tr>
+    </thead>
+    <tbody>
+    <% @user.tickets.order('updated_at DESC').each do |ticket| %>
+        <tr>
+            <td>
+                <%= link_to ticket.title, ticket %>
+                <a href="/tickets/<%= ticket.id %>/edit">
+                    <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                </a>
+            </td>
+            <td><%= ticket.status.titleize %></td>
+            <td><%= ticket.created_at.in_time_zone('Eastern Time (US & Canada)').strftime("%D at %l:%M%p") %></td>
+            <td><%= ticket.updated_at.in_time_zone('Eastern Time (US & Canada)').strftime("%D at %l:%M%p") %></td>
+            <td><%= ticket.issue_type.capitalize %></td>
+            <% if current_user.role != 'customer' %>
+                <td><%= ticket.priority %></td>
+             <% end %>
+        </tr>
+    <% end %>
+    </tbody>
+</table>

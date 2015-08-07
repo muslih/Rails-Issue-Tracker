@@ -15,7 +15,7 @@ class UserDashboardsController < ApplicationController
   end
 
   def customer
-    @tickets = current_user.tickets
+    @user = current_user
   end
 
   private

@@ -3,7 +3,7 @@ class TicketsController < ApplicationController
   before_action :does_user_have_access?, only: [:show, :edit, :update]
 
   def index
-    @tickets = Ticket.all
+    @tickets = Ticket.search(params[:search])
   end
 
   def show

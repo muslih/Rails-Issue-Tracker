@@ -64,39 +64,7 @@
             <div class="panel-heading black-panel-heading">
                 <h5 class="text-center">Assigned Tickets</h5>
             </div>
-            <table class="table table-bordered table-hover">
-                <thead>
-                    <tr>
-                        <th>Ticket</th>
-                        <th>Status</th>
-                        <th>Opened</th>
-                        <th>Updated</th>
-                        <th>Type</th>
-                        <th>Priority</th>
-                        <th>User</th>
-                    </tr>
-                </thead>
-                <tbody>
-                <% @tickets.each do |ticket| %>
-                    <tr class="<%= 'danger' if ticket.priority > 4 %>">
-                        <td>
-                            <%= link_to ticket.title, ticket %>
-                            <a href="/tickets/<%= ticket.id %>/edit">
-                                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
-                            </a>
-                        </td>
-                        <td><%= ticket.status.titleize %></td>
-                        <td><%= ticket.created_at.in_time_zone('Eastern Time (US & Canada)').strftime("%D at %l:%M%p") %></td>
-                        <td><%= ticket.updated_at.in_time_zone('Eastern Time (US & Canada)').strftime("%D at %l:%M%p") %></td>
-                        <td><%= ticket.issue_type.capitalize %></td>
-                        <td><%= ticket.priority %></td>
-                        <td>
-                            <%= link_to (ticket.user.first_name + " " + ticket.user.last_name), ticket.user %>
-                        </td>
-                    </tr>
-                <% end %>
-                </tbody>
-            </table>
+            <%= render 'layouts/detailed_ticket_table' %>
         </div>
     </row>
 </div>

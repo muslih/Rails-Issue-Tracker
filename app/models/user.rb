@@ -13,6 +13,10 @@ class User < ActiveRecord::Base
   validates :role, presence: true,
                    inclusion: { in: %w(customer technician admin) }
 
+  def name
+    self.first_name + ' ' + self.last_name
+  end
+
   def add_group(group)
     group = Group.find_by(name: group)
     group.users << self

@@ -25,7 +25,7 @@
             <td><%= ticket.issue_type.capitalize %></td>
             <td><%= ticket.priority %></td>
             <td>
-                <%= link_to (ticket.user.first_name + " " + ticket.user.last_name), ticket.user %>
+                <%= link_to ticket.user.name, ticket.user %>
             </td>
         </tr>
     <% end %>

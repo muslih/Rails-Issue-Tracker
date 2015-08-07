@@ -15,7 +15,7 @@ class UserDashboardsController < ApplicationController
   def groupmanage
     @groups = Group.all
     @groupopts = Group.all.map{|g| [g.name.capitalize, g.id]}
-    @useropts = User.where('role == ? || role == ?', 'technician', 'admin').map{|u| [u.email, u.id]}
+    @useropts = User.where('role != ?', 'customer').map{|u| [u.name, u.id]}
   end
 
   def tech

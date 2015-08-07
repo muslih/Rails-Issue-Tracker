@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  
   devise_for :users
   devise_scope :user do
     authenticated :user do
@@ -11,6 +10,7 @@ Rails.application.routes.draw do
   end
   resources :tickets, except: [:destroy]
   resources :issues,  except: [:edit, :update, :destroy]
+  resources :users, only: [:show]
 
   get '/dashboard/admin' => 'user_dashboards#admin'
   get '/dashboard/tech' => 'user_dashboards#tech'

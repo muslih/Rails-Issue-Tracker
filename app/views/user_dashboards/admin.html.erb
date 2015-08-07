@@ -90,7 +90,9 @@
                         <td><%= ticket.updated_at.in_time_zone('Eastern Time (US & Canada)').strftime("%D at %l:%M%p") %></td>
                         <td><%= ticket.issue_type.capitalize %></td>
                         <td><%= ticket.priority %></td>
-                        <td><%= ticket.user.first_name %> <%= ticket.user.last_name %></td>
+                        <td>
+                            <%= link_to (ticket.user.first_name + " " + ticket.user.last_name), ticket.user %>
+                        </td>
                     </tr>
                 <% end %>
                 </tbody>

@@ -18,10 +18,9 @@ Rails.application.routes.draw do
   resources :group_memberships
   resources :users
 
-  get '/dashboard/admin' => 'user_dashboards#admin'
+  get '/dashboard/' => 'user_dashboards#admin'
   get '/dashboard/admin/managegroups' => 'user_dashboards#groupmanage'
-  get '/dashboard/tech' => 'user_dashboards#tech'
-  get '/dashboard/' => 'user_dashboards#customer'
+  get '/mytickets/' => 'user_dashboards#customer'
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

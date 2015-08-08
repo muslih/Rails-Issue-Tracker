@@ -1,5 +1,4 @@
 <div class="panel-body">    
-    <h1 class="text center">Admin Dashboard</h1>
     <div class="row">
         <div class="panel panel-default col-md-4">
             <div class="panel-heading black-panel-heading">
@@ -7,55 +6,63 @@
             </div>
             <ul class="list-group">
                 <li class="list-group-item">
-                    <strong>Open</strong>: <%= @open.size %>
+                    <strong>
+                        <a href="/tickets?utf8=✓&search=open">
+                            Open
+                        </a>
+                    </strong>: <%= @open.size %>
                 </li>
                 <li class="list-group-item">
-                    <strong>Contact Customer</strong>: <%= @cc.size %>
+                    <strong>
+                        <a href="/tickets?utf8=✓&search=contact+customer">
+                            Contact Customer
+                        </a>
+                    </strong>: <%= @cc.size %>
                 </li>
                 <li class="list-group-item">
-                    <strong>Pending Customer Response</strong>: <%= @pcr.size %>
+                    <strong>
+                        <a href="/tickets?utf8=✓&search=pending+customer+response">
+                            Pending Customer Response
+                        </a>
+                    </strong>: <%= @pcr.size %>
                 </li>
                 <li class="list-group-item">
-                    <strong>In Progress</strong>: <%= @progress.size %>
+                    <strong>
+                        <a href="/tickets?utf8=✓&search=in+progress">
+                            In Progress
+                        </a>
+                    </strong>: <%= @progress.size %>
                 </li>
             </ul>
         </div>
-        <div class="panel panel-default col-md-4">
+        <div class="panel panel-default col-md-4 contact-customer">
             <div class="panel-heading black-panel-heading">
-                <h4>Ticket Amounts</h4>
+                <h4>Contact Customer <small>(<%= @cc.size %>)</small></h4>
             </div>
             <ul class="list-group">
+                <% @cc.each do |t| %>
                 <li class="list-group-item">
-                    <strong>Open</strong>: <%= @open.size %>
+                    <%= link_to t.title, t %>
+                    <a href="/tickets/<%= t.id %>/edit">
+                        <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                    </a>
                 </li>
-                <li class="list-group-item">
-                    <strong>Contact Customer</strong>: <%= @cc.size %>
-                </li>
-                <li class="list-group-item">
-                    <strong>Pending Customer Response</strong>: <%= @pcr.size %>
-                </li>
-                <li class="list-group-item">
-                    <strong>In Progress</strong>: <%= @progress.size %>
-                </li>
+                <% end %>
             </ul>
         </div>
-        <div class="panel panel-default col-md-4">
+        <div class="panel panel-default col-md-4 contact-customer">
             <div class="panel-heading black-panel-heading">
-                <h4>Ticket Amounts</h4>
+                <h4>Customer Responded <small>(<%= @mypcr.size %>)</small></h4>
             </div>
             <ul class="list-group">
+                <% @mypcr.each do |t| %>
                 <li class="list-group-item">
-                    <strong>Open</strong>: <%= @open.size %>
+                    <%= link_to t.title, t %>
+                    <a href="/tickets/<%= t.id %>/edit">
+                        <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                    </a>
                 </li>
-                <li class="list-group-item">
-                    <strong>Contact Customer</strong>: <%= @cc.size %>
-                </li>
-                <li class="list-group-item">
-                    <strong>Pending Customer Response</strong>: <%= @pcr.size %>
-                </li>
-                <li class="list-group-item">
-                    <strong>In Progress</strong>: <%= @progress.size %>
-                </li>
+                <% end %>
             </ul>
         </div>
     </div>

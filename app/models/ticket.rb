@@ -21,8 +21,9 @@ class Ticket < ActiveRecord::Base
   def self.search(search)
     if search
       joins(:user).where("title LIKE ? OR (printf('%s %s',
-                         users.first_name, users.last_name) LIKE ?)",
-                         "%#{search}%", "%#{search}%")
+                         users.first_name, users.last_name) LIKE ?) OR
+                         issue_type LIKE ? OR status == ?",
+                         "%#{search}%", "%#{search}%", "%#{search}%", "#{search.downcase}")
     else
       find(:all)
     end

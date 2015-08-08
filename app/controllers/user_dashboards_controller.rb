@@ -9,6 +9,7 @@ class UserDashboardsController < ApplicationController
     @open = Ticket.where('status == ?', 'open')
     @progress = Ticket.where('status == ?', 'in progress')
     @pcr = Ticket.where('status == ?', 'pending customer response')
+    @mypcr = @pcr.joins(:assignments).where(assignments: { group_id: current_user.groups.map(&:id) })
     @cc = Ticket.where('status == ?', 'contact customer') 
   end
 

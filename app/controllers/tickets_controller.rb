@@ -1,7 +1,7 @@
 class TicketsController < ApplicationController
   before_action :authenticate_user!
   before_action :does_user_have_access?, only: [:show, :edit, :update]
-
+  
   def index
     if params[:search] == ''
       flash[:info] = 'Please enter a search query'
@@ -16,13 +16,15 @@ class TicketsController < ApplicationController
   def new
     @ticket = Ticket.new
     @ticket.issues.build
+    @typeopts = Group.all.map{|g| [g.name.capitalize, g.name]}
+    @typeopts.delete(['Admin', 'admin']) unless current_user.role != 'customer'
   end
 
   def create
     @ticket = current_user.tickets.new(ticket_params)
 
     if @ticket.save
-      @ticket.add_group(@ticket.issue_type)
+      @ticket.add_group('helpdesk')
       flash[:success] = "Ticket has been created."
       redirect_to @ticket
     else
@@ -32,6 +34,8 @@ class TicketsController < ApplicationController
 
   def edit
     @ticket = Ticket.find(params[:id])
+    @typeopts = Group.all.map{|g| [g.name.capitalize, g.name]}
+    @typeopts.delete(['Admin', 'admin']) unless current_user.role != 'customer'
   end
 
   def update

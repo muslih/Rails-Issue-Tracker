@@ -1,52 +1,54 @@
  <div class="col-md-10 col-md-offset-1">
     <h2 class="text-center">New Ticket</h2>   
-    <%= form_for(@ticket) do |f| %>
-        <%= render 'shared/error_messages', object: f.object %>
-        <div class="row">
-            <div class="form-group col-md-12">
-                <%= f.label :title %>
-                <%= f.text_field :title, class: 'form-control' %>
+    <div class="well">
+        <%= form_for(@ticket) do |f| %>
+            <%= render 'shared/error_messages', object: f.object %>
+            <div class="row">
+                <div class="form-group col-md-12">
+                    <%= f.label :title %>
+                    <%= f.text_field :title, class: 'form-control' %>
+                </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="form-group col-md-4">
-                <% typeopts = Group.all.map{|g| [g.name.capitalize, g.name]} %>
-                <% typeopts.delete(['Admin', 'admin']) unless current_user.role != 'customer' %>
-                <%= f.label :issue_type %>
-                <%= f.select :issue_type, typeopts, {}, { class: "form-control" }%>
+            <div class="row">
+                <div class="form-group col-md-4">
+                    <% typeopts = Group.all.map{|g| [g.name.capitalize, g.name]} %>
+                    <% typeopts.delete(['Admin', 'admin']) unless current_user.role != 'customer' %>
+                    <%= f.label :issue_type %>
+                    <%= f.select :issue_type, typeopts, {}, { class: "form-control" }%>
+                </div>
+
+                <div class="form-group col-md-4">
+                    <% if current_user.role != 'customer' %>
+                        <% list = { "Open" => "open", "In Progress"  => "in progress", "Contact Customer" => "contact customer", 
+                                    "Pending Customer Response" => "pending customer response", 
+                                    "Customer Responded" => "customer responded", "Closed" => "closed"}%>
+                        <%= f.label :status %>
+                        <%= f.select :status, list, {}, { class: "form-control" }%>
+                    <% else %>
+                        <%= f.hidden_field :status, :value => 'open' %>
+                    <% end %>
+                </div>
+
+                <div class="form-group col-md-4">
+                    <% if current_user.role != 'customer' %>
+                        <% list = (1..5).to_a %>
+                        <%= f.label :priority %>
+                        <%= f.select :priority, list, {}, { class: "form-control" } %>
+                    <% else %>
+                        <%= f.hidden_field :priority, :value => 1 %>
+                    <% end %>
+                </div>
             </div>
 
-            <div class="form-group col-md-4">
-                <% if current_user.role != 'customer' %>
-                    <% list = { "Open" => "open", "In Progress"  => "in progress", "Contact Customer" => "contact customer", 
-                                "Pending Customer Response" => "pending customer response", 
-                                "Customer Responded" => "customer responded", "Closed" => "closed"}%>
-                    <%= f.label :status %>
-                    <%= f.select :status, list, {}, { class: "form-control" }%>
-                <% else %>
-                    <%= f.hidden_field :status, :value => 'open' %>
-                <% end %>
-            </div>
-
-            <div class="form-group col-md-4">
-                <% if current_user.role != 'customer' %>
-                    <% list = (1..5).to_a %>
-                    <%= f.label :priority %>
-                    <%= f.select :priority, list, {}, { class: "form-control" } %>
-                <% else %>
-                    <%= f.hidden_field :priority, :value => 1 %>
-                <% end %>
-            </div>
-        </div>
-
-        <%= f.fields_for :issues do |n| %>
-            <div class="form-group">
-                <%= n.label :description, "Issue description" %>
-                <%= n.text_area :description, class: 'form-control' %>
-                <%= n.hidden_field :user_id, :value => current_user.id %>
-            </div>
+            <%= f.fields_for :issues do |n| %>
+                <div class="form-group">
+                    <%= n.label :description, "Issue description" %>
+                    <%= n.text_area :description, class: 'tinymce' %>
+                    <%= n.hidden_field :user_id, :value => current_user.id %>
+                </div>
+            <% end %>
+            <%= tinymce %>
+            <%= f.submit 'Submit Ticket', class: "btn btn-primary form-control" %>
         <% end %>
-
-        <%= f.submit 'Submit Ticket', class: "btn btn-primary form-control" %>
-    <% end %>
+    </div>
 </div>

@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Ticket, type: :model do
   it "has a valid factory" do
-    expect(FactoryGirl.create(:ticket)).to be_valid
+    expect(FactoryGirl.create(:ticket, issues: FactoryGirl.create(:issue))).to be_valid
   end
 
   it "should belong to user" do
@@ -32,8 +32,8 @@ RSpec.describe Ticket, type: :model do
   it "is valid with valid issue type" do
     expect(FactoryGirl.build(:ticket, issue_type: 'software')).to be_valid
     expect(FactoryGirl.build(:ticket, issue_type: 'equipment')).to be_valid
-    expect(FactoryGirl.build(:ticket, issue_type: 'computer')).to be_valid
-    expect(FactoryGirl.build(:ticket, issue_type: 'peripheral')).to be_valid
+    expect(FactoryGirl.build(:ticket, issue_type: 'desktop')).to be_valid
+    expect(FactoryGirl.build(:ticket, issue_type: 'helpdesk')).to be_valid
     expect(FactoryGirl.build(:ticket, issue_type: 'network')).to be_valid
   end
 

@@ -34,7 +34,6 @@ class TicketsController < ApplicationController
 
   def edit
     @ticket = Ticket.find(params[:id])
-    @typeopts.delete(['Admin', 'admin']) unless current_user.role != 'customer'
   end
 
   def update

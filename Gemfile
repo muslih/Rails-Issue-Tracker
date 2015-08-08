@@ -17,6 +17,7 @@ gem 'lorem'
 gem 'normalize-rails'
 gem 'responders',             '~> 2.0'
 gem 'devise'
+gem 'tinymce-rails'
 
 group :development, :test do
   gem 'sqlite3',     '1.3.9'

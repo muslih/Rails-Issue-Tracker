@@ -1,0 +1,4 @@
+toolbar:
+  - bold italic | bullist numlist | undo redo
+plugins:
+  - lists

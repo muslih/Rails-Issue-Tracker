@@ -5,7 +5,7 @@ class Ticket < ActiveRecord::Base
   has_many :assignments
   has_many :groups, through: :assignments
 
-  ISSUE_TYPES = %w(software equipment desktop network helpdesk)
+  ISSUE_TYPES = %w(software equipment desktop network helpdesk admin)
   STATUSES = ['open', 'in progress', 'pending customer response',
               'customer responded', 'contact customer', 'closed']
   validates :title,         presence: true

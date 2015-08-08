@@ -1,21 +1,49 @@
-<div class="col-md-8 col-md-offset-2">
+<br>
+<div class="col-md-12">
     <div class="panel panel-default">
-        <div class="panel-heading">
-            <h3><%= @ticket.title %></h3>
+        <div class="panel-heading black-panel-heading">
+            <h3>
+                <%= @ticket.title %>
+                <%= link_to 'Update', edit_ticket_path(@ticket), class: 'btn btn-default pull-right' %>
+            </h3>
         </div>
         <div class="panel-body">
-            <div class="well">
-                <h4><%= @ticket.user.first_name %> <%= @ticket.user.last_name %></h4>
-                <p><%= @ticket.status %></p>
-                <p><%= @ticket.user.email %></p>
-                <p><%= @ticket.user.role %></p>
+            <div class="well row">
+                <div class="col-md-3">
+                    <h4>
+                        <%= @ticket.user.name %> <br>
+                        <small>
+                            <%= @ticket.user.email %><br>
+                            Opened: 
+                            <%= @ticket.created_at.in_time_zone('Eastern Time (US & Canada)').strftime("%D at %l:%M%p") %>
+                        </small>
+                    </h4>
+                </div>
+                <div class="col-md-2">
+                    <h5>Status</h5>
+                    <p><%= @ticket.status.capitalize %></p>
+                </div>
+                <div class="col-md-2">
+                    <h5>Issue Type</h5>
+                    <p><%= @ticket.issue_type.capitalize %></p>
+                </div>
+                <% if current_user.role != 'customer' %>
+                    <div class="col-md-2">
+                        <h5>Priority</h5>
+                        <p><%= @ticket.priority %></p>
+                    </div>
+                <% end %>
             </div>
 
             <% @ticket.issues.order('created_at DESC').each do |issue| %>
-                <div class="well">
-                    <%= issue.description %>
-                    <%= issue.created_at %>
-                    <%= issue.user.first_name %> <%= issue.user.last_name %>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <%= issue.created_at.in_time_zone('Eastern Time (US & Canada)').strftime("%D at %l:%M%p") %>
+                        <%= issue.user.name %>
+                    </div>
+                    <div class="panel-body">
+                        <%= issue.description %>
+                    </div>
                 </div>
             <% end %>
         </div>

@@ -2,6 +2,17 @@ class UsersController < ApplicationController
   before_action :authenticate_user!
   before_action :does_user_have_access?, except: [:edit, :update]
 
+  def index
+    if params[:search] == nil
+      @users = User.all.order('last_name ASC')
+    elsif params[:search] == ''
+      flash[:info] = 'Please enter a search query'
+      @users = User.all.order('last_name ASC')
+    else
+      @users = User.search(params[:search]).order('last_name ASC')
+    end
+  end
+
   def show
     @user = User.find(params[:id])
   end

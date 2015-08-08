@@ -1,10 +1,12 @@
 class TicketsController < ApplicationController
   before_action :authenticate_user!
   before_action :does_user_have_access?, only: [:show, :edit, :update]
-  
+
   def index
     if params[:search] == ''
       flash[:info] = 'Please enter a search query'
+    elsif params[:search] == nil
+      params[:search] = ''
     end
     @tickets = Ticket.search(params[:search])
   end

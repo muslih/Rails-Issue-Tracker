@@ -13,6 +13,13 @@ class User < ActiveRecord::Base
   validates :role, presence: true,
                    inclusion: { in: %w(customer technician admin) }
 
+  def self.search(search)
+    if search
+      where("email LIKE ? OR (printf('%s %s', users.first_name, users.last_name) LIKE ?) OR role == ?", 
+            "%#{search}%", "%#{search}%", "#{search.downcase}")
+    end
+  end
+
   def name
     self.first_name + ' ' + self.last_name
   end

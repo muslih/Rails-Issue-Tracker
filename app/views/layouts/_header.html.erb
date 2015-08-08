@@ -24,6 +24,9 @@
 			<% end %>
 			<ul class="nav navbar-nav navbar-right">
 				<li><%= link_to "Create New Ticket", new_ticket_path %></li>
+				<% if current_user.role != 'customer' %>
+					<li><%= link_to 'Users Directory', users_path %></li>
+				<% end %>
 				<% if current_user.role == 'admin' %>
 					<li><%= link_to 'Manage User Groups', dashboard_admin_managegroups_path %></li>
 				<% end %>

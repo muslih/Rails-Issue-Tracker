@@ -18,8 +18,6 @@ class TicketsController < ApplicationController
   def new
     @ticket = Ticket.new
     @ticket.issues.build
-    @typeopts = Group.all.map{|g| [g.name.capitalize, g.name]}
-    @typeopts.delete(['Admin', 'admin']) unless current_user.role != 'customer'
   end
 
   def create
@@ -36,7 +34,6 @@ class TicketsController < ApplicationController
 
   def edit
     @ticket = Ticket.find(params[:id])
-    @typeopts = Group.all.map{|g| [g.name.capitalize, g.name]}
     @typeopts.delete(['Admin', 'admin']) unless current_user.role != 'customer'
   end
 

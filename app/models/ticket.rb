@@ -1,7 +1,7 @@
 class Ticket < ActiveRecord::Base
   belongs_to :user
   has_many :issues
-  accepts_nested_attributes_for :issues
+  accepts_nested_attributes_for :issues, reject_if: :all_blank
   has_many :assignments
   has_many :groups, through: :assignments
 
@@ -17,6 +17,7 @@ class Ticket < ActiveRecord::Base
                             numericality: { greater_than: 0,
                                             less_than: 6,
                                             only_integer: true }
+  validates :issues,         presence: true
 
   def self.search(search)
     if search
@@ -31,6 +32,8 @@ class Ticket < ActiveRecord::Base
 
   def add_group(group)
     group = Group.find_by(name: group)
-    group.tickets << self
+    if !self.groups.exists?(id: group.id)
+      group.tickets << self
+    end
   end
 end

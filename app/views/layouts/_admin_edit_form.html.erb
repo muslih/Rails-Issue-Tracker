@@ -9,8 +9,10 @@
         </div>
         <div class="row">
             <div class="form-group col-md-4">
+                <% typeopts = Group.all.map{|g| [g.name.capitalize, g.name]} %>
+                <% typeopts.delete(['Admin', 'admin']) unless current_user.role != 'customer' %>
                 <%= f.label :issue_type %>
-                <%= f.select :issue_type, @typeopts, {}, { class: "form-control" }%>
+                <%= f.select :issue_type, typeopts, {}, { class: "form-control" }%>
             </div>
 
             <div class="form-group col-md-4">

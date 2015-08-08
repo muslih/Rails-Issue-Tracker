@@ -19,9 +19,6 @@ class UserDashboardsController < ApplicationController
     @useropts = User.where('role != ?', 'customer').map{|u| [u.name, u.id]}
   end
 
-  def tech
-  end
-
   def customer
     @user = current_user
   end
@@ -31,8 +28,11 @@ class UserDashboardsController < ApplicationController
     def does_user_have_access?
       if params[:action] == 'tech' and current_user.role == 'customer'
         flash[:warning] = "You do not have access to that page."
-        redirect_to '/dashboard'
-      elsif (params[:action] == 'admin' or params[:action] == 'groupmanage') and current_user.role != 'admin'
+        redirect_to '/'
+      elsif (params[:action] == 'admin') and !(['admin', 'technician'].include? current_user.role)
+        flash[:warning] = "You do not have access to that page."
+        redirect_to '/'
+      elsif (params[:action] == 'groupmanage') and current_user.role != 'admin'
         flash[:warning] = "You do not have access to that page."
         redirect_to '/dashboard'
       end

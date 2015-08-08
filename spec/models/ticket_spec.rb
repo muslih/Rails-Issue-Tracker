@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe Ticket, type: :model do
   it "has a valid factory" do
-    expect(FactoryGirl.create(:ticket, issues: FactoryGirl.create(:issue))).to be_valid
+    expect(FactoryGirl.create(:ticket)).to be_valid
   end
 
   it "should belong to user" do
@@ -11,6 +11,14 @@ RSpec.describe Ticket, type: :model do
 
   it "should have many issues" do
     should have_many(:issues)
+  end
+
+  it "should accept nested attributes for issues" do
+    should accept_nested_attributes_for(:issues)
+  end
+
+  it "should have many assignments" do
+    should have_many(:assignments)
   end
 
   it "is invalid without title" do

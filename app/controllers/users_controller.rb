@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
   before_action :authenticate_user!
   before_action :does_user_have_access?, except: [:edit, :update]
+  before_action :is_correct_user?, only: [:edit, :update]
 
   def index
     if params[:search] == nil
@@ -36,9 +37,12 @@ class UsersController < ApplicationController
   private
 
     def update_params
-      if current_user.role == 'admin'
+      user = User.find(params[:id])
+      if current_user.role == 'admin' and current_user == user
+        params.require(:user).permit(:role, :first_name, :last_name, :email, :password, :password_confirmatiom)
+      elsif current_user.role == 'admin'
         params.require(:user).permit(:role)
-      elsif current_user.id == params[:id]
+      elsif current_user == user
         params.require(:user).permit(:first_name, :last_name, :email, :password, :password_confirmatiom)
       end
     end
@@ -47,6 +51,16 @@ class UsersController < ApplicationController
       if !(['admin', 'technician'].include? current_user.role)
         flash[:warning] = "You do not have access to that page."
         redirect_to '/'
+      end
+    end
+
+    def is_correct_user?
+      user = User.find(params[:id])
+      if current_user.role != 'admin'
+        if current_user != user
+          flash[:warning] = "You do not have access to that page."
+          redirect_to '/'
+        end
       end
     end
 end

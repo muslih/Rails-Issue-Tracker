@@ -10,6 +10,10 @@ RSpec.describe TicketsController, type: :controller do
     @ticket = FactoryGirl.build(:ticket)
     @ticket.user_id = @customer.id
     @ticket.save
+    groups = %w{software equipment desktop network helpdesk admin}
+    groups.each do |group|
+      Group.create(name: group)
+    end
   end
 
   describe "GET show" do
@@ -69,7 +73,7 @@ RSpec.describe TicketsController, type: :controller do
         :issue_type => "software",
         :status => "open",
         :priority => 1,
-        :issues_attributes => [{ :description => "Test description" }] }
+        :issues_attributes => [{ description: "Test description", user_id: @customer.id}] }
     end
 
     it "creates a new ticket with valid params" do

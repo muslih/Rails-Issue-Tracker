@@ -31,7 +31,7 @@ class UserDashboardsController < ApplicationController
       if params[:action] == 'tech' and current_user.role == 'customer'
         flash[:warning] = "You do not have access to that page."
         redirect_to '/dashboard'
-      elsif params[:action] == 'admin' and current_user.role != 'admin'
+      elsif (params[:action] == 'admin' or params[:action] == 'groupmanage') and current_user.role != 'admin'
         flash[:warning] = "You do not have access to that page."
         redirect_to '/dashboard'
       end

@@ -5,18 +5,37 @@
     <div class="panel-body">
       <div class="row">
           <%= form_for(GroupMembership.new) do |f| %>
-            <%= render 'shared/error_messages', object: f.object %>
             <div class="form-group col-md-4">
+                <%= render 'shared/error_messages', object: f.object %>
                 <div class="form-group">
                     <%= f.label :group_id, "Group to add to" %>
                     <%= f.select :group_id, @groupopts, {}, { class: "form-control" }%>
                 </div>
                 <div class="form-group">
                     <%= f.label :user_id, "Users to add" %>
-                    <%= f.select :user_id, @useropts, { :selected => :user_ids,:include_blank => false }, { class: "form-control", multiple: true, size: 10 }%>
+                    <%= f.select :user_id, @useropts, {}, { class: "form-control", multiple: true, size: 20 }%>
                 </div>
                 <%= f.submit 'Add Users', class: "btn btn-primary form-control" %>
             <% end %>
+        </div>
+        <div class="col-md-8">
+          <% @groups.each do |group| %>
+            <h5><%= group.name.capitalize %></h5>
+              <ul class="list-group">
+                <% group.users.each do |user| %>
+                  <li class="list-group-item">
+                    <%= user.name %>
+                    <%= link_to group_membership_path(id: group.id, user_id: user.id), 
+                        method: :delete, class: 'pull-right red' do %>
+                      <i class="glyphicon glyphicon-remove"></i>
+                    <% end %>
+                    <a href="/users/<%= user.id %>/edit" class="pull-right" style="padding-right: 5px;">
+                      <i class="glyphicon glyphicon-edit"></i>
+                    </a>
+                  </li>
+                <% end %>
+              </ul>
+          <% end %>
         </div> 
     </div>
 </div>    

@@ -1,0 +1,47 @@
+<h2>Edit info</h2>
+
+<%= form_for(@user) do |f| %>
+  <div class="form-group">
+    <%= f.label :email %><br />
+    <%= f.email_field :email, autofocus: true, 
+        class: 'form-control disabled', 
+        disabled: (current_user.role == 'admin' unless @user == current_user) %>
+  </div>
+  
+  <% if (current_user.role != 'admin') or (current_user == @user) %>
+    <div class="form-group">
+      <%= f.label :password %>
+      <%= f.password_field :password, autocomplete: "off", class: 'form-control' %>
+    </div>
+
+    <div class="form-group">
+      <%= f.label :password_confirmation %><br />
+      <%= f.password_field :password_confirmation, autocomplete: "off", class: 'form-control' %>
+    </div>
+  <% end %>
+  
+  <div class="form-group">
+    <%= f.label :first_name %>
+    <%= f.text_field :first_name,
+        class: 'form-control', 
+        disabled: (current_user.role == 'admin' unless @user == current_user) %>
+  </div>
+  
+  <div class-"form-group">
+    <%= f.label :last_name %>
+    <%= f.text_field :last_name, 
+        class: 'form-control', 
+        disabled: (current_user.role == 'admin' unless @user == current_user) %>
+  </div>
+    
+  <% if current_user.role == 'admin' %>
+    <div class="form-group">
+       <%= f.label :role, "Role" %>
+       <%= f.select :role, @roleopts, {}, { class: "form-control" }%>
+    </div>
+  <% end %>
+  <br>
+  <div class="form-group">
+    <%= f.submit "Sign up", class: 'btn btn-primary' %>
+  </div>
+<% end %>

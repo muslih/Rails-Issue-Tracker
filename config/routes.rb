@@ -1,5 +1,9 @@
 Rails.application.routes.draw do
-  devise_for :users
+  get 'users/edit'
+
+  get 'users/update'
+
+  devise_for :users, path_prefix: 'd'
   devise_scope :user do
     authenticated :user do
       root :to => 'passthrough#index', as: :authenticated_root
@@ -12,6 +16,7 @@ Rails.application.routes.draw do
   resources :issues,  except: [:edit, :update, :destroy]
   resources :users, only: [:show]
   resources :group_memberships
+  resources :users
 
   get '/dashboard/admin' => 'user_dashboards#admin'
   get '/dashboard/admin/managegroups' => 'user_dashboards#groupmanage'

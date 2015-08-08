@@ -2,7 +2,7 @@ class User < ActiveRecord::Base
   has_many :issues
   has_many :tickets
   has_many :groups, through: :group_memberships
-  has_many :group_memberships
+  has_many :group_memberships, dependent: :destroy
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,

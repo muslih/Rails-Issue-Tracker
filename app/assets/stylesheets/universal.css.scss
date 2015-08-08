@@ -25,4 +25,9 @@ table {
     font-size: .85em;
 }
 
-hr {}
+.red {
+    color: red;
+    &:hover {
+        color: #cc0000;
+    }
+}

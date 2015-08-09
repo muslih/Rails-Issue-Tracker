@@ -61,7 +61,7 @@ The new ticket page.
 ![New ticket page](http://i.imgur.com/TGoqrnX.png)
 
 Searching for a ticket.
-![Ticket search](http://i.imgur.com/TGoqrnX.png)
+![Ticket search](http://i.imgur.com/cNTJSPb.png)
 
 Users directory.
 ![Users directory](http://i.imgur.com/4B7OeNA.png)

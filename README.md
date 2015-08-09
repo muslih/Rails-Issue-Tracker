@@ -17,7 +17,7 @@ Tickets can be created and assigned to user groups. Tickets have the properties:
 * Title - The title of the issue
 * Issue Type - Determines the user group the ticket gets assigned to
 * Status - What the current status of the ticket is (open, closed, in progress, contact customer, etc.)
-* Priority - How important this ticket is on a scale of 1 to 5 (5 being the highest). 5 are highligted and moved to the top of the dashboard
+* Priority - How important this ticket is on a scale of 1 to 5 (5 being the highest). 5s are highligted and moved to the top of the dashboard
 * Issues - These are the descriptions of each update of the ticket, and are required to be filled out to update the ticket.
     * Has a user foreign key to keep track of who updated the ticket
 * User - A foreign key to the user that created the ticket.
@@ -30,12 +30,12 @@ Users are authenticated via devise. Users have the properties:
 * Last name
 * Email
 * Password
-* Role - currently split into three roles, admin, technician, and customer.
+* Role - currently split into three roles -- admin, technician, and customer.
     * Admins can look at, search for, and edit any ticket in the system. Look at and modify the role of any user in the system. And manage the user groups, as well as search and view the user directory.
     * Technicians can look at, search for, and edit any ticket in the system. View any user as well as their ticket history, and search users in the users directory,
     * Customers can view their ticket history, create new tickets, and edit their user info.
 
-All abilities of the user roles are inherited as the move up the chain, with admin's having the most access.
+All abilities of the user roles are inherited as they move up the chain, with admin's having the most access.
 
 Users can be searched by name, email, and role.
 

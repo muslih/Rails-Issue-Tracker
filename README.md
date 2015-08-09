@@ -69,6 +69,9 @@ Users directory.
 Users search results.
 ![Users search results](http://i.imgur.com/dqxJXvD.png)
 
+Users show page, shows users ticket history.
+![Users show page](http://i.imgur.com/XLYMMua.png)
+
 The admin's user group manager.
 ![Admin group manage](http://i.imgur.com/k2QBiSA.png)
 

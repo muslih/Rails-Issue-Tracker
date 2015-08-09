@@ -35,14 +35,11 @@ tech.add_group('helpdesk')
                               issue_type: %w{software equipment desktop network helpdesk}.sample,
                               status: status.sample,
                               priority: rand(1..5),
-                              issues: [Issue.new(description: Faker::Lorem.paragraph(3))])
+                              issues: [Issue.new(description: Faker::Lorem.paragraph(3), 
+                                                 user_id: c.id)])
       tick.add_group(tick.issue_type)
     end
 
-    # c.tickets.each do |ticket|
-    #   i = ticket.issues.create(description: Faker::Lorem.paragraph(3), user_id: c.id)
-    #   i.user_id = c.id
-    # end
   t = FactoryGirl.create(:technician)
   t.save
     (1..5).each do
@@ -50,14 +47,11 @@ tech.add_group('helpdesk')
                               issue_type: %w{software equipment desktop network helpdesk}.sample,
                               status: status.sample,
                               priority: rand(1..5),
-                              issues: [Issue.new(description: Faker::Lorem.paragraph(3))])
+                              issues: [Issue.new(description: Faker::Lorem.paragraph(3), 
+                                                 user_id: t.id)])
       tick.add_group(tick.issue_type)
     end
 
-    t.tickets.each do |ticket|
-      i = ticket.issues.create(description: Faker::Lorem.paragraph(3), user_id: t.id)
-      i.user_id = c.id
-    end
   a = FactoryGirl.create(:admin)
   a.save
     (1..5).each do
@@ -65,13 +59,9 @@ tech.add_group('helpdesk')
                               issue_type: %w{software equipment desktop network helpdesk}.sample,
                               status: status.sample,
                               priority: rand(1..5),
-                              issues: [Issue.new(description: Faker::Lorem.paragraph(3))])
+                              issues: [Issue.new(description: Faker::Lorem.paragraph(3), 
+                                                 user_id: a.id)])
       tick.add_group(tick.issue_type)
-    end
-
-    a.tickets.each do |ticket|
-      i = ticket.issues.create(description: Faker::Lorem.paragraph(3), user_id: a.id)
-      i.user_id = a.id
     end
 end
 
